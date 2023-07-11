@@ -9,30 +9,60 @@ const HeaderEl = styled.header`
   background-color: var(--colors-ui-base);
 `;
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+`;
 
 const Title = styled.a.attrs({
   href: '/',
-})``;
+})`
+  color: var(--colors-text);
+  font-size: var(--fs-sm);
+  text-decoration: none;
+  font-weight: var(--fw-bold);
+`;
 
-const ModeSwitcher = styled.div``;
+const ModeSwitcher = styled.div`
+  cursor: pointer;
+  color: var(--colors-text);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-bold);
+  display: flex;
+  column-gap: 0.75rem;
+  align-items: center;
+  text-transform: capitalize;
+`;
 
-export const Header = () => {
-  const [theme, setTheme] = useState('light')
-
-  useEffect(() => {
-    
-  }, [theme])
+export const Header = ({
+  theme,
+  setTheme,
+}: {
+  theme: string;
+  setTheme: (v: string) => void;
+}) => {
+  const toggleTheme = () => setTheme(theme === 'light' ? 'dark' : 'light');
 
   return (
     <HeaderEl>
       <Container>
         <Wrapper>
           <Title>
-            <BiHome size={32} />
+            {theme === 'light' ? (
+              <BiHome size={32} />
+            ) : (
+              <BiSolidHome size={32} />
+            )}
           </Title>
-          <ModeSwitcher>
-            <BiMoon size={32} /> Light Theme
+          <ModeSwitcher onClick={toggleTheme}>
+            {theme === 'light' ? (
+              <BiMoon size={32} />
+            ) : (
+              <BiSolidMoon size={32} />
+            )}
+            {theme} Theme
           </ModeSwitcher>
         </Wrapper>
       </Container>
