@@ -36,7 +36,7 @@ const ModeSwitcher = styled.div`
   text-transform: capitalize;
 `;
 
-export const Header = ({
+const Header = ({
   theme,
   setTheme,
 }: {
@@ -69,3 +69,5 @@ export const Header = ({
     </HeaderEl>
   );
 };
+
+export { Header };

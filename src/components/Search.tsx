@@ -32,7 +32,7 @@ const Input = styled.input.attrs({
   width: 100%;
 `;
 
-export const Search = ({
+const Search = ({
   theme,
   search,
   setSearch,
@@ -56,3 +56,5 @@ export const Search = ({
     </InputContainer>
   );
 };
+
+export { Search };
