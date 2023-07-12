@@ -4,32 +4,61 @@ import { Countries } from '../services/types/countriesType';
 
 interface IInfoCardProps {
   title: string;
-  description: string[];
+  description: string[] | string;
 }
 
-interface ICardProps {
+export interface ICardProps {
   img: string;
   name: string;
   info: IInfoCardProps[];
-  onClick: () => void;
 }
 
-const Wrapper = styled.article``;
+const Wrapper = styled.article`
+  border-radius: var(--radii);
+  background-color: var(--colors-ui-base);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+`;
 
-const CardImage = styled.img``;
+const CardImage = styled.img`
+  display: block;
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  object-position: center;
+  box-shadow: var(--shadow);
+`;
 
-const CardBody = styled.div``;
+const CardBody = styled.div`
+  padding: 1rem 1.5rem 2rem;
+`;
 
-const CardTitle = styled.h3``;
+const CardTitle = styled.h3`
+  margin: 0;
+  font-size: var(--fs-md);
+  font-weight: var(--fw-bold);
+`;
 
-const CardList = styled.ul``;
+const CardList = styled.ul`
+  list-style: none;
+  margin: 0;
+  padding: 1rem 0;
+`;
 
-const CardListItem = styled.li``;
+const CardListItem = styled.li`
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  font-weight: var(--fw-light);
 
-const Card: FC<ICardProps> = ({ img, name, info, onClick }) => {
+  & > span {
+    font-weight: var(--fw-normal);
+  }
+`;
+
+const Card = ({ img, name, info }: ICardProps) => {
   return (
-    <Wrapper onClick={onClick}>
-      <CardImage />
+    <Wrapper>
+      <CardImage src={img} alt={name} />
       <CardBody>
         <CardTitle>{name}</CardTitle>
         <CardList>

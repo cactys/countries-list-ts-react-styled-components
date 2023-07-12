@@ -1,19 +1,33 @@
 import { useState, useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
 
 import { Header } from './components/Header';
 import { Main } from './components/Main';
-import { Controls } from './components/Controls';
-import { Countries } from './services/types/countriesType';
+import { Home } from './pages/Home';
+import { NotFound } from './pages/NotFound';
+import { Details } from './pages/Details';
+import { Country } from './services/interfaces/countriesInterface';
 import { getAllCountries } from './utils/api';
-import { CardList } from './components/CardList';
-import { Card } from './components/Card';
 
 function App() {
   const [theme, setTheme] = useState('light');
   const [search, setSearch] = useState('');
-  const [countries, setCountries] = useState<Countries>([]);
+  const [countries, setCountries] = useState<Country[]>([]);
 
-  console.log(countries);
+  const countryInfo = countries.map((country) => {
+    return {
+      img: country.flags.png,
+      name: country.name.common,
+      info: [
+        {
+          title: 'Population',
+          description: country.population.toLocaleString(),
+        },
+        { title: 'Region', description: country.region },
+        { title: 'Capital', description: country.capital },
+      ],
+    };
+  });
 
   useEffect(() => {
     const fetchCountries = async () => {
@@ -32,32 +46,24 @@ function App() {
     <>
       <Header theme={theme} setTheme={setTheme} />
       <Main>
-        <Controls theme={theme} search={search} setSearch={setSearch} />
-        <CardList>
-          {countries?.map((country) => {
-            const countryInfo = {
-              img: country.flags.png,
-              name: country.name.common,
-              info: [
-                {
-                  title: 'Population',
-                  description: country.population.toLocaleString(),
-                },
-                { title: 'Region', description: country.region },
-                { title: 'Capital', description: country.capital },
-              ],
-            };
-
-            return (
-              <Card
-                key={countryInfo.name}
-                img={countryInfo.img}
-                name={countryInfo.name}
-                info={countryInfo.info}
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Home
+                theme={theme}
+                search={search}
+                setSearch={setSearch}
+                countryInfo={countryInfo}
               />
-            );
-          })}
-        </CardList>
+            }
+          />
+          <Route
+            path="/country/:name"
+            element={<Details countryInfo={countryInfo} />}
+          />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
       </Main>
     </>
   );

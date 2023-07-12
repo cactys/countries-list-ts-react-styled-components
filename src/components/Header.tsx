@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { BiMoon, BiSolidMoon, BiHome, BiSolidHome } from 'react-icons/bi';
 
@@ -16,9 +17,7 @@ const Wrapper = styled.div`
   padding: 0.75rem 0;
 `;
 
-const Title = styled.a.attrs({
-  href: '/',
-})`
+const Title = styled(Link)`
   color: var(--colors-text);
   font-size: var(--fs-sm);
   text-decoration: none;
@@ -49,7 +48,7 @@ const Header = ({
     <HeaderEl>
       <Container>
         <Wrapper>
-          <Title>
+          <Title to="/">
             {theme === 'light' ? (
               <BiHome size={32} />
             ) : (

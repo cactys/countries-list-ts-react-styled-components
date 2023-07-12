@@ -1,6 +1,6 @@
 interface Country {
   name: Name;
-  capital?: string[];
+  capital: string[];
   region: string;
   population: number;
   flags: Flags;
