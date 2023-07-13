@@ -32,16 +32,12 @@ const Home = ({
   theme,
   search,
   setSearch,
-  region,
-  setRegion,
   countryInfo,
   countries,
 }: {
   theme: string;
   search: string;
   setSearch: (v: string) => void;
-  region?: string;
-  setRegion: (v: ChangeEvent<HTMLSelectElement>) => void;
   countryInfo: ICardProps[];
   countries: Country[];
 }) => {
@@ -67,8 +63,6 @@ const Home = ({
         theme={theme}
         search={search}
         setSearch={setSearch}
-        region={region}
-        setRegion={setRegion}
         onSearch={handleSearch}
       />
       <CardList>

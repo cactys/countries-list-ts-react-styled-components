@@ -5,14 +5,22 @@ import {
   Dispatch,
   ChangeEvent,
   ChangeEventHandler,
+  FC,
 } from 'react';
 import { styled } from 'styled-components';
-import ValueType from 'react-select';
+import ValueType, { ActionMeta, OptionContext, Options } from 'react-select';
 
 import { Search } from './Search';
 import { CustomSelect } from './CustomSelect';
 import { options } from '../utils/constants';
 import { IRegion } from '../App';
+
+interface IControlsProps {
+  theme: string;
+  search: string;
+  setSearch: (v: string) => void;
+  onSearch: (search: string, region?: string) => void;
+}
 
 const Wrapper = styled.div`
   display: flex;
@@ -26,27 +34,13 @@ const Wrapper = styled.div`
   }
 `;
 
-const Controls = ({
+const Controls: FC<IControlsProps> = ({
   theme,
   search,
   setSearch,
-  region,
-  setRegion,
   onSearch,
-}: {
-  theme: string;
-  search: string;
-  setSearch: (v: string) => void;
-  region?: string;
-  setRegion: (v: ChangeEvent<HTMLSelectElement>) => void;
-  onSearch: (search: string, region?: string) => void;
 }) => {
-  const handleChangeRegion = (e: ChangeEvent<HTMLSelectElement>): void => {
-    console.log(e);
-    const { value, labels } = e.target;
-
-    setRegion({ labels: labels, value: value });
-  };
+  const [region, setRegion] = useState('');
 
   useEffect(() => {
     onSearch(search, region);
@@ -63,7 +57,7 @@ const Controls = ({
         isClearable
         isSearchable={false}
         value={region}
-        onChange={handleChangeRegion}
+        onChange={setRegion}
       />
     </Wrapper>
   );
