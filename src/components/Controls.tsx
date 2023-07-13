@@ -37,20 +37,22 @@ const Controls = ({
   theme: string;
   search: string;
   setSearch: (v: string) => void;
-  region?: IRegion;
-  setRegion: (v: IRegion) => IRegion;
+  region?: string;
+  setRegion: (v: ChangeEvent<HTMLSelectElement>) => void;
   onSearch: (search: string, region?: string) => void;
 }) => {
-  const handleChangeRegion = (e: IRegion) => {
+  const handleChangeRegion = (e: ChangeEvent<HTMLSelectElement>): void => {
     console.log(e);
-    const { value, labels } = e;
+    const { value, labels } = e.target;
 
     setRegion({ labels: labels, value: value });
   };
 
   useEffect(() => {
-    onSearch(search, region?.value);
+    onSearch(search, region);
   }, [region, search]);
+
+  console.log(region);
 
   return (
     <Wrapper>
@@ -60,7 +62,7 @@ const Controls = ({
         placeholder="Filter by Region"
         isClearable
         isSearchable={false}
-        value={region?.value || ''}
+        value={region}
         onChange={handleChangeRegion}
       />
     </Wrapper>

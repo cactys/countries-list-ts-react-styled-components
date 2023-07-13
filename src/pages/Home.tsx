@@ -40,8 +40,8 @@ const Home = ({
   theme: string;
   search: string;
   setSearch: (v: string) => void;
-  region?: IRegion;
-  setRegion: (v: IRegion) => void;
+  region?: string;
+  setRegion: (v: ChangeEvent<HTMLSelectElement>) => void;
   countryInfo: ICardProps[];
   countries: Country[];
 }) => {

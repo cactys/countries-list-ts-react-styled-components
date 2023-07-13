@@ -18,7 +18,7 @@ export interface IRegion {
 function App() {
   const [theme, setTheme] = useState('light');
   const [search, setSearch] = useState('');
-  const [region, setRegion] = useState<IRegion>();
+  const [region, setRegion] = useState<IRegion>({ value: '', labels: '' });
   const [countries, setCountries] = useState<Country[]>([]);
 
   const countryInfo = countries.map((country) => {
@@ -61,7 +61,7 @@ function App() {
                 theme={theme}
                 search={search}
                 setSearch={setSearch}
-                region={region?.value}
+                region={region.value}
                 setRegion={setRegion}
                 countryInfo={countryInfo}
                 countries={countries}
