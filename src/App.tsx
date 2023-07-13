@@ -8,10 +8,17 @@ import { NotFound } from './pages/NotFound';
 import { Details } from './pages/Details';
 import { Country } from './services/interfaces/countriesInterface';
 import { getAllCountries } from './utils/api';
+import { options } from './utils/constants';
+
+export interface IRegion {
+  value?: string;
+  labels: string | null;
+}
 
 function App() {
   const [theme, setTheme] = useState('light');
   const [search, setSearch] = useState('');
+  const [region, setRegion] = useState<IRegion>();
   const [countries, setCountries] = useState<Country[]>([]);
 
   const countryInfo = countries.map((country) => {
@@ -35,7 +42,7 @@ function App() {
       setCountries(data);
     };
 
-    fetchCountries();
+    if (!countries.length) fetchCountries();
   }, []);
 
   useEffect(() => {
@@ -54,7 +61,10 @@ function App() {
                 theme={theme}
                 search={search}
                 setSearch={setSearch}
+                region={region?.value}
+                setRegion={setRegion}
                 countryInfo={countryInfo}
+                countries={countries}
               />
             }
           />

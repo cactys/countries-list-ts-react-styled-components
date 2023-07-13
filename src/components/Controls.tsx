@@ -1,15 +1,18 @@
-import { useState } from 'react';
+import {
+  useState,
+  useEffect,
+  SetStateAction,
+  Dispatch,
+  ChangeEvent,
+  ChangeEventHandler,
+} from 'react';
 import { styled } from 'styled-components';
 import ValueType from 'react-select';
 
 import { Search } from './Search';
 import { CustomSelect } from './CustomSelect';
 import { options } from '../utils/constants';
-
-interface ISelectOption {
-  value: string;
-  label: string;
-}
+import { IRegion } from '../App';
 
 const Wrapper = styled.div`
   display: flex;
@@ -27,12 +30,27 @@ const Controls = ({
   theme,
   search,
   setSearch,
+  region,
+  setRegion,
+  onSearch,
 }: {
   theme: string;
   search: string;
-  setSearch: (newValue: string) => void;
+  setSearch: (v: string) => void;
+  region?: IRegion;
+  setRegion: (v: IRegion) => IRegion;
+  onSearch: (search: string, region?: string) => void;
 }) => {
-  const [region, setRegion] = useState('');
+  const handleChangeRegion = (e: IRegion) => {
+    console.log(e);
+    const { value, labels } = e;
+
+    setRegion({ labels: labels, value: value });
+  };
+
+  useEffect(() => {
+    onSearch(search, region?.value);
+  }, [region, search]);
 
   return (
     <Wrapper>
@@ -42,8 +60,8 @@ const Controls = ({
         placeholder="Filter by Region"
         isClearable
         isSearchable={false}
-        value={region}
-        // onChange={setRegion}
+        value={region?.value || ''}
+        onChange={handleChangeRegion}
       />
     </Wrapper>
   );

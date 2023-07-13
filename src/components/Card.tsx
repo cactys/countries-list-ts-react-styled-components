@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { styled } from 'styled-components';
 import { Countries } from '../services/types/countriesType';
+import { Country } from '../services/interfaces/countriesInterface';
 
 interface IInfoCardProps {
   title: string;
@@ -55,14 +56,27 @@ const CardListItem = styled.li`
   }
 `;
 
-const Card = ({ img, name, info }: ICardProps) => {
+const Card = (props: Country) => {
+  const { flags, name, region, capital, population } = props;
+
+  const countryInfo = {
+    info: [
+      {
+        title: 'Population',
+        description: population.toLocaleString(),
+      },
+      { title: 'Region', description: region },
+      { title: 'Capital', description: capital },
+    ],
+  };
+
   return (
     <Wrapper>
-      <CardImage src={img} alt={name} />
+      <CardImage src={flags.png} alt={name.official} />
       <CardBody>
-        <CardTitle>{name}</CardTitle>
+        <CardTitle>{name.official}</CardTitle>
         <CardList>
-          {info.map((el) => (
+          {countryInfo.info.map((el) => (
             <CardListItem key={el.title}>
               <span>{el.title}:</span> {el.description}
             </CardListItem>
