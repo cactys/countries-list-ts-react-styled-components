@@ -1,3 +1,5 @@
+import { IStateOptions } from "../components/Controls";
+
 const BASE_URL = 'https://restcountries.com/v3.1';
 
 const ALL_COUNTRIES =

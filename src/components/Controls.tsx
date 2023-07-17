@@ -8,7 +8,12 @@ import {
   FC,
 } from 'react';
 import { styled } from 'styled-components';
-import ValueType, { ActionMeta, OptionContext, Options } from 'react-select';
+import ValueType, {
+  ActionMeta,
+  GetOptionValue,
+  OptionContext,
+  Options,
+} from 'react-select';
 
 import { Search } from './Search';
 import { CustomSelect } from './CustomSelect';
@@ -20,6 +25,16 @@ interface IControlsProps {
   search: string;
   setSearch: (v: string) => void;
   onSearch: (search: string, region?: string) => void;
+}
+
+export interface IStateOptions {
+  value: string;
+  label: string;
+}
+
+export interface IDataOptions {
+  readonly value: IStateOptions | null;
+  readonly onChange: (newValue: IStateOptions | null) => void;
 }
 
 const Wrapper = styled.div`
@@ -41,10 +56,12 @@ const Controls: FC<IControlsProps> = ({
   onSearch,
 }) => {
   const [region, setRegion] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
 
-  useEffect(() => {
-    onSearch(search, region);
-  }, [region, search]);
+  // useEffect(() => {
+  //   const { value } = region;
+  //   onSearch(search, value);
+  // }, [region, search]);
 
   console.log(region);
 
@@ -57,7 +74,12 @@ const Controls: FC<IControlsProps> = ({
         isClearable
         isSearchable={false}
         value={region}
-        onChange={setRegion}
+        onChange={(
+          option: typeof Option | null,
+          actionMeta: ActionMeta<typeof Option>
+        ) => {
+          setRegion(option);
+        }}
       />
     </Wrapper>
   );
